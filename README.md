@@ -1,6 +1,8 @@
 # webrtc-api-graph
 Display a graph representing the WebRTC JavaScript Object models and relation.
 
+![Model](./webrtc_chrome.svg "logo")
+
 ## Install
 
 Serve 2 files `webrtc-api.html` and `webrtc-api.js` to your server (node.js or any).
