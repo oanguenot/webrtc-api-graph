@@ -1,5 +1,5 @@
 # webrtc-api-graph
-Display a graph representing the WebRTC JavaScript Object models and relation.
+Display a graph representing the WebRTC JavaScript Object models and relations.
 
 ![Model](./webrtc_model_Chrome-v90.png "logo")
 
