@@ -64,6 +64,9 @@ const ready = async () => {
     "RTCSctpTransport",
     "RTCSessionDescription",
     "RTCStatsReport",
+    "RTCEncodedAudioFrame",
+    "RTCEncodedVideoFrame",
+    "RTCError",
   ]
   // Relation
   model += "MediaStreamTrack <-- RTCPeerConnection\n"
