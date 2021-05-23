@@ -95,24 +95,24 @@ const ready = async () => {
     try {
       const api = eval(apiName)
       if (api) {
-        console.log(">>>", api)
-        model += `class ${api.name}{\n`
         const descriptors = Object.getOwnPropertyDescriptors(api.prototype)
+        const nbElt = Object.keys(descriptors).length
+
+        model += `class ${api.name} (${nbElt}){\n`
+        model += `<<${nbElt}>>\n`
 
         Object.keys(descriptors).sort((a, b) => (a.localeCompare(b))).forEach(key => {
-          if (key !== "constructor") {
-            const obj = descriptors[key]
-            if ("value" in obj) {
-              model += `${key}()\n`
-            } else {
-              model += `${key}\n`
-            }
+          const obj = descriptors[key]
+          if ("value" in obj) {
+            model += `${key}()\n`
+          } else {
+            model += `${key}\n`
           }
         });
         model += "}\n";
       }
     } catch (err) {
-      console.log(">>>err", err);
+      console.log("Error", err);
     }
   })
 

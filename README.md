@@ -5,7 +5,7 @@ Display a graph representing the WebRTC JavaScript Object models and relations.
 
 ## Install
 
-Serve 2 files `webrtc-api.html` and `webrtc-api.js` to your server (node.js or any).
+Serve the two files `webrtc-api.html` and `webrtc-api.js` by your web server (NodeJS or any).
 
 ## Usage
 
