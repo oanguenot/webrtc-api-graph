@@ -42,7 +42,16 @@ const ready = async () => {
     saveSvg(svg, `webrtc_model_${browser_name}.svg`);
   }
 
-  mermaid.initialize({ startOnLoad: true });
+  mermaid.initialize({
+    startOnLoad: true,
+    flowchart: {
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: 'linear',
+      diagramPadding: 8,
+    },
+    securityLevel: 'loose',
+  });
 
   let model = "classDiagram\n"
 
@@ -67,8 +76,41 @@ const ready = async () => {
     "RTCEncodedAudioFrame",
     "RTCEncodedVideoFrame",
     "RTCError",
+    "RTCEncodedAudioFrame",
+    "RTCEncodedVideoFrame",
+    "AudioFrame",
+    "VideoFrame",
+    "MediaStreamTrackProcessor",
+    "MediaStreamTrackGenerator",
+    "WritableStream",
+    "ReadableStream",
+    "ReadableStreamDefaultReader",
+    "TransformStream",
+    "AudioNode",
+    "AudioContext",
+    "AudioListener",
+    "PannerNode",
+    "AudioBufferSourceNode",
+    "GainNode",
+    "StereoPannerNode",
+    "AnalyserNode",
+    "DelayNode",
+    "BiquadFilterNode",
+    "MediaElementAudioSourceNode",
+    "MediaStreamAudioSourceNode",
+    "MediaStreamAudioDestinationNode",
+    "ConstantSourceNode",
+    "ConvolverNode",
+    "ChannelSplitterNode",
+    "ChannelMergerNode",
+    "OscillatorNode",
+    "AudioScheduledSourceNode",
+    "HTMLMediaElement"
+
   ]
   // Relation
+
+  model += "AudioContext <-- AudioNode\n"
   model += "MediaStreamTrack <-- RTCPeerConnection\n"
   model += "MediaStreamTrack <-- MediaStream\n"
   model += "MediaStream <-- RTCPeerConnection\n"
@@ -90,7 +132,42 @@ const ready = async () => {
   model += "RTCDataChannel <-- RTCPeerConnection\n"
   model += "RTCSessionDescription <-- RTCPeerConnection\n"
   model += "RTCCertificate <-- RTCPeerConnection\n"
+  model += "RTCSctpTransport <-- RTCPeerConnection\n"
+  model += "RTCDtlsTransport <-- RTCSctpTransport\n"
   model += "MediaStream <-- RTCRtpSender\n"
+
+  model += "MediaStreamTrackProcessor <-- MediaStreamTrack\n"
+  model += "MediaStreamTrack <-- MediaStreamTrackGenerator\n"
+  model += "MediaStreamTrackGenerator <-- WritableStream\n"
+  model += "ReadableStream <-- MediaStreamTrackProcessor\n"
+  model += "ReadableStream <-- TransformStream\n"
+  model += "WritableStream <-- TransformStream\n"
+  model += "WritableStreamDefaultWriter <-- WritableStream\n"
+  model += "ReadableStreamDefaultReader <-- ReadableStream\n"
+  model += "VideoFrame <-- ReadableStreamDefaultReader\n"
+  model += "VideoFrame <-- WritableStreamDefaultWriter\n"
+  model += "MediaStreamTrack <-- WritableStream\n"
+  model += "MediaElementAudioSourceNode <-- AudioContext\n"
+  model += "HTMLMediaElement <-- MediaElementAudioSourceNode\n"
+  model += "MediaStream <-- MediaStreamAudioSourceNode\n"
+  model += "MediaStreamAudioDestinationNode <-- AudioContext\n"
+  model += "MediaStream <-- MediaStreamAudioDestinationNode\n"
+  model += "MediaStreamTrack <-- HTMLMediaElement\n"
+  model += "AudioNode <-- GainNode\n"
+  model += "AudioNode <-- AnalyserNode\n"
+  model += "AudioNode <-- PannerNode\n"
+  model += "AudioNode <-- StereoPannerNode\n"
+  model += "AudioNode <-- DelayNode\n"
+  model += "AudioNode <-- ConstantSourceNode\n"
+  model += "AudioNode <-- ConvolverNode\n"
+  model += "AudioNode <-- OscillatorNode\n"
+  model += "AudioNode <-- AudioSchedulerSourceNode\n"
+  model += "AudioNode <-- AudioBufferSourceNode\n"
+  model += "AudioNode <-- AudioScheduledSourceNode\n"
+  model += "AudioNode <-- ChannelSplitterNode\n"
+  model += "AudioNode <-- ChannelMergerNode\n"
+  model += "AudioNode <-- BiquadFilterNode\n"
+  model += "PannerNode <-- AudioListener\n"
 
   // Discover API
   webrtcAPI.forEach(apiName => {
@@ -101,9 +178,8 @@ const ready = async () => {
         const descriptors = Object.getOwnPropertyDescriptors(api.prototype)
         const nbElt = Object.keys(descriptors).length
 
-        model += `class ${api.name} (${nbElt}){\n`
+        model += `class ${api.name}{\n`
         model += `<<${nbElt}>>\n`
-
         Object.keys(descriptors).sort((a, b) => (a.localeCompare(b))).forEach(key => {
           const obj = descriptors[key]
           if ("value" in obj) {
