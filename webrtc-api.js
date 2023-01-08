@@ -31,23 +31,26 @@ function buildTextExport(model, name) {
   return textStat;
 }
 
+function saveBlob(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const downloadLink = document.createElement("a");
+  downloadLink.href = url;
+  downloadLink.download = name.replace(/\s+/g, '').replace("%20", "");
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+}
 function saveSvg(svgEl, name) {
   svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   const svgData = svgEl.outerHTML;
   const preface = '<?xml version="1.0" standalone="no"?>\r\n';
   const svgBlob = new Blob([preface, svgData], { type: "image/svg+xml;charset=utf-8" });
-  const svgUrl = URL.createObjectURL(svgBlob);
-  const downloadLink = document.createElement("a");
-  downloadLink.href = svgUrl;
-  downloadLink.download = name;
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
+  saveBlob(svgBlob, name);
 }
 
-function saveToText(name) {
-  const blob = new Blob([completeStatsModel], { type: "text/plain;charset=utf-8" });
-  saveAs(blob, `webrtc_api_${name.replace(/\s+/g, '').replace("%20", "")}.txt`);
+function saveToText(content, name) {
+  const txtBlob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  saveBlob(txtBlob, name)
 }
 
 const parseUA = (userAgent) => {
@@ -82,7 +85,7 @@ const ready = async () => {
   }
 
   buttonTxt.onclick = () => {
-    saveToText(`webrtc_model_${browser_name}.txt`)
+    saveToText(completeStatsModel, `webrtc_model_${browser_name}.txt`)
   }
 
   mermaid.initialize({
