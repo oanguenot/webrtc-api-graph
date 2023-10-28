@@ -1,52 +1,64 @@
 export const interfaces = [
   "AnalyserNode",
-  "AudioNode",
-  "AudioContext",
-  "AudioListener",
   "AudioBuffer",
   "AudioBufferSourceNode",
-  "AudioDecoder",
+  "AudioContext",
   "AudioData",
-  "AudioEncoder",
+  "AudioDecoder",
   "AudioDestinationNode",
+  "AudioEncoder",
+  "AudioFrame",
+  "AudioListener",
   "AudioNode",
+  "AudioParam",
   "AudioProcessingEvent",
   "AudioScheduledSourceNode",
   "AudioWorklet",
   "AudioWorkletNode",
+  "BaseAudioContext",
   "BiquadFilterNode",
+  "BrowserCaptureMediaStreamTrack",
+  "CanvasCaptureMediaStreamTrack",
+  "CaptureController",
+  "ChannelMergerNode",
+  "ChannelSplitterNode",
+  "CompressionStream",
   "ConstantSourceNode",
   "ConvolverNode",
-  "ChannelSplitterNode",
-  "ChannelMergerNode",
+  "DecompressionStream",
   "DelayNode",
   "EncodedVideoChunk",
   "EncodedAudioChunk",
   "GainNode",
-  "HTMLMediaElement",
-  "HTMLVideoElement",
   "HTMLAudioElement",
+  "HTMLMediaElement",
+  "HTMLModelElement",
+  "HTMLVideoElement",
   "HTMLTrackElement",
   "HTMLCanvasElement",
+  "ImageBitmap",
   "ImageCapture",
   "ImageData",
-  "ImageBitmap",
+  "ImageDecoder",
+  "InputDeviceCapabilities",
+  "InputDeviceInfo",
   "ImageTrack",
-  "MediaDevices",
   "MediaCapabilities",
+  "MediaDevices",
   "MediaDeviceInfo",
-  "MediaStream",
+  "MediaElementAudioSourceNode",
+  "MediaEncryptedEvent",
   "MediaError",
+  "MediaMetadata",
   "MediaRecorder",
   "MediaSession",
   "MediaSource",
-  "MediaEncryptedEvent",
-  "MediaStreamTrack",
-  "MediaStreamTrackProcessor",
-  "MediaStreamTrackGenerator",
-  "MediaElementAudioSourceNode",
-  "MediaStreamAudioSourceNode",
+  "MediaStream",
   "MediaStreamAudioDestinationNode",
+  "MediaStreamAudioSourceNode",
+  "MediaStreamTrack",
+  "MediaStreamTrackGenerator",
+  "MediaStreamTrackProcessor",
   "MimeType",
   "OscillatorNode",
   "OffscreenCanvas",
@@ -54,6 +66,7 @@ export const interfaces = [
   "Permissions",
   "PermissionStatus",
   "ReadableStream",
+  "ReadableStreamDefaultController",
   "ReadableStreamDefaultReader",
   "RTCCertificate",
   "RTCDataChannel",
@@ -83,12 +96,18 @@ export const interfaces = [
   "TransformStream",
   "TextTrack",
   "WebTransport",
+  "WebTransportBidirectionalStream",
+  "WebTransportDatagramDuplexStream",
+  "WebTransportError",
   "WritableStream",
 ]
 
 export const prepareMermaidAPIDiagram = () => {
   let model = "classDiagram\n"
   model += "AudioContext <-- AudioNode\n"
+  model += "AudioContext <-- BaseAudioContext\n"
+  model += "AudioBuffer <-- BaseAudioContext\n"
+  model += "AudioBuffer <-- AudioBufferSourceNode\n"
   model += "MediaDeviceInfo <-- MediaDevices\n"
   model += "RTCRtpTransceiver <-- RTCPeerConnection\n"
   model += "RTCRtpReceiver <-- RTCRtpTransceiver\n"
@@ -160,6 +179,7 @@ export const prepareMermaidAPIDiagram = () => {
   model += "SourceBuffer <-- MediaSource\n"
   model += "TextTrack <-- HTMLTrackElement\n"
   model += "PermissionStatus <-- Permissions\n"
+  model += "AudioSchedulerSourceNode <-- AudioBufferSourceNode\n"
   return model;
 }
 
